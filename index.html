@@ -1,1 +1,915 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JEE Main Maths 60+ Marks Study Checklist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        slate: {
+                            850: '#151e32',
+                            950: '#090d16',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar for sleek dark mode */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #090d16;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #334155;
+        }
+
+        /* Custom checkbox styling */
+        .custom-checkbox {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 1.25rem;
+            height: 1.25rem;
+            border: 2px solid #475569;
+            border-radius: 0.375rem;
+            background-color: #0f172a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s ease-in-out;
+            flex-shrink: 0;
+        }
+        .custom-checkbox:hover {
+            border-color: #38bdf8;
+        }
+        .custom-checkbox:checked {
+            background-color: #0284c7;
+            border-color: #0284c7;
+        }
+        .custom-checkbox:checked::after {
+            content: '';
+            width: 0.35rem;
+            height: 0.65rem;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+            margin-bottom: 2px;
+        }
+        .pyq-checkbox:checked {
+            background-color: #10b981;
+            border-color: #10b981;
+        }
+        .pyq-checkbox:hover {
+            border-color: #34d399;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased min-h-screen selection:bg-sky-500/30 selection:text-sky-200">
+
+    <!-- Top Navigation & Hero Header -->
+    <header class="sticky top-0 z-30 bg-slate-950/85 backdrop-blur-md border-b border-slate-800/80">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                    <div class="flex items-center gap-2.5">
+                        <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-sky-500 to-indigo-600 text-white font-bold text-lg shadow-lg shadow-sky-500/20">∫</span>
+                        <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight text-white">
+                            JEE Main Maths <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400">60+ Checklist</span>
+                        </h1>
+                    </div>
+                    <p class="text-xs sm:text-sm text-slate-400 mt-1">12 High-Weightage Chapters &bull; Subtopics &amp; 2022–2026 PYQ Tracker</p>
+                </div>
+
+                <div class="flex items-center gap-3 self-start sm:self-auto">
+                    <button id="expandAllBtn" onclick="toggleAllCards()" class="px-3.5 py-2 text-xs font-medium rounded-lg bg-slate-800/90 hover:bg-slate-800 text-slate-200 border border-slate-700/80 transition">
+                        Expand All
+                    </button>
+                    <button onclick="openResetModal()" class="px-3.5 py-2 text-xs font-medium rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 transition">
+                        Reset Progress
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-6">
+
+        <!-- Dashboard Stats & Marks Unlocked Cards -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- Expected Marks Unlocked -->
+            <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 shadow-xl relative overflow-hidden">
+                <div class="flex items-center justify-between">
+                    <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Expected Marks Unlocked</span>
+                    <span id="targetBadge" class="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-amber-500/15 text-amber-400 border border-amber-500/30">
+                        Goal: 60+ Marks
+                    </span>
+                </div>
+                <div class="mt-3 flex items-baseline gap-2">
+                    <span id="marksUnlocked" class="text-3xl sm:text-4xl font-extrabold text-white">0</span>
+                    <span class="text-sm font-medium text-slate-400">/ 76 Max Marks</span>
+                </div>
+                <div class="mt-3 w-full bg-slate-800 rounded-full h-2.5 overflow-hidden">
+                    <div id="marksProgressBar" class="bg-gradient-to-r from-sky-500 via-indigo-500 to-emerald-400 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+                </div>
+                <p id="marksSubtext" class="text-xs text-slate-400 mt-2">Complete subtopics &amp; PYQs to unlock expected exam marks.</p>
+            </div>
+
+            <!-- Overall Checklist Completion -->
+            <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 shadow-xl">
+                <div class="flex items-center justify-between">
+                    <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Overall Syllabus Mastery</span>
+                    <span id="overallPercentText" class="text-sm font-bold text-sky-400">0%</span>
+                </div>
+                <div class="mt-3 flex items-baseline gap-2">
+                    <span id="completedTasksCount" class="text-3xl sm:text-4xl font-extrabold text-white">0</span>
+                    <span id="totalTasksCount" class="text-sm font-medium text-slate-400">/ 0 Milestones</span>
+                </div>
+                <div class="mt-3 w-full bg-slate-800 rounded-full h-2.5 overflow-hidden">
+                    <div id="overallProgressBar" class="bg-sky-500 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+                </div>
+                <div class="mt-2 flex justify-between text-xs text-slate-400">
+                    <span id="subtopicsSummary">Subtopics: 0/0</span>
+                    <span id="pyqsSummary" class="text-emerald-400/90">PYQs: 0/36</span>
+                </div>
+            </div>
+
+            <!-- Chapters Mastered -->
+            <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 shadow-xl flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Chapters 100% Completed</span>
+                        <span class="text-xs text-emerald-400 font-medium">Auto-Saved</span>
+                    </div>
+                    <div class="mt-3 flex items-baseline gap-2">
+                        <span id="masteredChaptersCount" class="text-3xl sm:text-4xl font-extrabold text-emerald-400">0</span>
+                        <span class="text-sm font-medium text-slate-400">/ 12 Chapters</span>
+                    </div>
+                </div>
+                <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs">
+                    <span class="text-slate-400">Target Attempt Strategy:</span>
+                    <span class="font-semibold text-slate-200">17–18 Qs @ 90% Accuracy</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exam Strategy & Target Tracker Banner -->
+        <section class="bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border border-indigo-500/30 rounded-2xl p-4 sm:p-5">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                <div class="space-y-1">
+                    <div class="flex items-center gap-2">
+                        <span class="px-2 py-0.5 text-[11px] font-bold uppercase tracking-wider rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">Exam Execution Blueprint</span>
+                        <span class="text-xs text-slate-400 hidden sm:inline">&bull; Smart Question Selection</span>
+                    </div>
+                    <h2 class="text-sm sm:text-base font-bold text-white">How to Convert These 12 Chapters into 60+ Marks (99+ %ile in Maths)</h2>
+                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                        Prioritize <strong class="text-sky-300">Tier 1 (36–44M)</strong> first—NTA repeats exact patterns in 3D Geometry, Matrices, and Differential Equations. Skip 6-minute calculation traps in Indefinite Integration or Conics and hunt <strong class="text-emerald-300">Statistics &amp; Linear DE</strong> questions first.
+                    </p>
+                </div>
+                <div class="grid grid-cols-3 gap-2 sm:gap-3 shrink-0 text-center">
+                    <div class="bg-slate-950/70 border border-slate-800 rounded-xl px-3 py-2">
+                        <div class="text-xs text-slate-400">Tier 1</div>
+                        <div class="text-sm font-bold text-sky-400">~40 Marks</div>
+                    </div>
+                    <div class="bg-slate-950/70 border border-slate-800 rounded-xl px-3 py-2">
+                        <div class="text-xs text-slate-400">Tier 2</div>
+                        <div class="text-sm font-bold text-indigo-400">~26 Marks</div>
+                    </div>
+                    <div class="bg-slate-950/70 border border-slate-800 rounded-xl px-3 py-2">
+                        <div class="text-xs text-slate-400">Tier 3</div>
+                        <div class="text-sm font-bold text-emerald-400">~10 Marks</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tier Filter Tabs & Search -->
+        <section class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
+            <div class="flex flex-wrap items-center gap-2" id="filterTabs">
+                <button onclick="setFilter('all')" data-filter="all" class="filter-btn active px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-sky-500 text-slate-950 shadow-lg shadow-sky-500/20">
+                    All Chapters (12)
+                </button>
+                <button onclick="setFilter('tier1')" data-filter="tier1" class="filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-slate-900 text-slate-300 border border-slate-800 hover:border-slate-700">
+                    Tier 1: Must-Do (5)
+                </button>
+                <button onclick="setFilter('tier2')" data-filter="tier2" class="filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-slate-900 text-slate-300 border border-slate-800 hover:border-slate-700">
+                    Tier 2: High-Scoring (5)
+                </button>
+                <button onclick="setFilter('tier3')" data-filter="tier3" class="filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-slate-900 text-slate-300 border border-slate-800 hover:border-slate-700">
+                    Tier 3: Quick-Kill (2)
+                </button>
+            </div>
+
+            <div class="relative w-full sm:w-64">
+                <input type="text" id="searchInput" oninput="renderChapters()" placeholder="Search chapter or subtopic..." class="w-full bg-slate-900 border border-slate-800 focus:border-sky-500 focus:outline-none rounded-xl pl-9 pr-3 py-2 text-xs sm:text-sm text-slate-200 placeholder-slate-500">
+                <svg class="w-4 h-4 text-slate-500 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+            </div>
+        </section>
+
+        <!-- Chapters Grid / List -->
+        <section id="chaptersContainer" class="space-y-4 pb-12">
+            <!-- Dynamically populated by JavaScript -->
+        </section>
+
+    </main>
+
+    <!-- Custom Reset Confirmation Modal (No alert/confirm used) -->
+    <div id="resetModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-rose-500/15 border border-rose-500/30 flex items-center justify-center text-rose-400">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-white">Reset All Study Progress?</h3>
+                    <p class="text-xs text-slate-400">This will clear all checked subtopics and PYQ milestones.</p>
+                </div>
+            </div>
+            <p class="text-sm text-slate-300">Are you sure you want to reset your JEE Main Maths checklist back to 0%? This action cannot be undone.</p>
+            <div class="flex justify-end gap-3 pt-2">
+                <button onclick="closeResetModal()" class="px-4 py-2 text-xs sm:text-sm font-medium rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 transition">
+                    Cancel
+                </button>
+                <button onclick="confirmResetProgress()" class="px-4 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-rose-600 hover:bg-rose-500 text-white transition">
+                    Yes, Reset Everything
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+        <div class="bg-slate-800 border border-slate-700 text-slate-100 px-4 py-2.5 rounded-xl shadow-xl flex items-center gap-2 text-xs sm:text-sm font-medium">
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            <span id="toastMessage">Progress saved</span>
+        </div>
+    </div>
+
+    <script>
+        // Structured Data for the 12 High-Weightage JEE Main Maths Chapters
+        const chaptersData = [
+            // TIER 1: Must-Do Heavyweights (~40 Marks)
+            {
+                id: '3d-geometry',
+                number: 1,
+                title: '3D Geometry',
+                tier: 'tier1',
+                tierLabel: 'Tier 1 • Must-Do',
+                questions: '2 – 3 Qs',
+                marksRange: '8 – 12 Marks',
+                avgMarks: 10,
+                tip: 'Highest ROI chapter in JEE Maths. Master shortest distance between skew lines & image/foot of perpendicular formulas.',
+                subtopics: [
+                    'Direction Cosines & Direction Ratios (angle between two lines)',
+                    'Equations of a Line in Space (Cartesian & Vector forms)',
+                    'Shortest Distance Between Two Skew & Parallel Lines',
+                    'Foot of Perpendicular, Image of a Point & Distance from a Line',
+                    'Line-Plane Intersection & Coplanarity Conditions (Syllabus-aligned)'
+                ],
+                pyqs: [
+                    '2022–2023 PYQs Solved',
+                    '2024–2025 PYQs Solved',
+                    '2026 PYQs + Short Formula Sheet'
+                ]
+            },
+            {
+                id: 'vector-algebra',
+                number: 2,
+                title: 'Vector Algebra',
+                tier: 'tier1',
+                tierLabel: 'Tier 1 • Must-Do',
+                questions: '1 – 2 Qs',
+                marksRange: '4 – 8 Marks',
+                avgMarks: 6,
+                tip: 'Combine dot and cross product identities with 3D geometry setups for quick 2-minute solves.',
+                subtopics: [
+                    'Dot Product, Projection of a Vector & Angle Conditions',
+                    'Cross Product, Area of Triangle/Parallelogram & Unit Normal',
+                    'Scalar Triple Product (STP) & Coplanarity of Vectors',
+                    'Vector Triple Product (VTP) & Lagrange’s Identity',
+                    'Solving Vector Equations using Linear Combination'
+                ],
+                pyqs: [
+                    '2022–2023 PYQs Solved',
+                    '2024–2025 PYQs Solved',
+                    '2026 PYQs + Short Formula Sheet'
+                ]
+            },
+            {
+                id: 'matrices-determinants',
+                number: 3,
+                title: 'Matrices & Determinants',
+                tier: 'tier1',
+                tierLabel: 'Tier 1 • Must-Do',
+                questions: '2 Qs',
+                marksRange: '8 Marks',
+                avgMarks: 8,
+                tip: 'Cramer’s Rule for consistency of linear equations appears in nearly 90% of JEE Main shifts.',
+                subtopics: [
+                    'Algebra of Matrices, Symmetric, Skew-Symmetric & Orthogonal Matrices',
+                    'Determinant Expansion, Properties & Characteristic Equation (Cayley-Hamilton)',
+                    'Adjoint & Inverse Properties: |adj(A)|, adj(adj(A)), (AB)⁻¹',
+                    'System of Linear Equations (Unique, Infinite & No Solution via Cramer’s Rule)',
+                    'Homogeneous Linear Equations & Non-Trivial Solution Conditions'
+                ],
+                pyqs: [
+                    '2022–2023 PYQs Solved',
+                    '2024–2025 PYQs Solved',
+                    '2026 PYQs + Short Formula Sheet'
+                ]
+            },
+            {
+                id: 'sequence-series',
+                number: 4,
+                title: 'Sequence & Series',
+                tier: 'tier1',
+                tierLabel: 'Tier 1 • Must-Do',
+                questions: '1 – 2 Qs',
+                marksRange: '4 – 8 Marks',
+                avgMarks: 6,
+                tip: 'Focus heavily on V_n method (telescoping series) and AM ≥ GM inequalities.',
+                subtopics: [
+                    'Arithmetic Progression (AP) & Geometric Progression (GP) Properties',
+                    'Arithmetico-Geometric Progression (AGP) & Infinite GP Sums',
+                    'Method of Differences & Telescoping Series (T_n = V_n - V_{n-1})',
+                    'Sigma Notation & Standard Summation Formulas',
+                    'AM ≥ GM ≥ HM Inequality Applications for Min/Max'
+                ],
+                pyqs: [
+                    '2022–2023 PYQs Solved',
+                    '2024–2025 PYQs Solved',
+                    '2026 PYQs + Short Formula Sheet'
+                ]
+            },
+            {
+                id: 'definite-integration',
+                number: 5,
+                title: 'Definite Integration',
+                tier: 'tier1',
+                tierLabel: 'Tier 1 • Must-Do',
+                questions: '1 – 2 Qs',
+                marksRange: '4 – 8 Marks',
+                avgMarks: 6,
+                tip: 'Always test King’s Property and Even/Odd symmetry before attempting manual integration.',
+                subtopics: [
+                    'King’s Property ∫f(x)dx = ∫f(a+b-x)dx & Queen’s Property',
+                    'Modulus, Greatest Integer [x] & Fractional Part {x} Integrals',
+                    'Even/Odd Functions & Periodic Function Properties',
+                    'Leibnitz Rule for Differentiation Under Integral Sign',
+                    'Limit of a Sum as Definite Integral & Wallis Formula'
+                ],
+                pyqs: [
+                    '2022–2023 PYQs Solved',
+                    '2024–2025 PYQs Solved',
+                    '2026 PYQs + Short Formula Sheet'
+                ]
+            },
+
+            // TIER 2: High-Scoring & Predictable (~26 Marks)
+            {
+                id: 'differential-equations',
+                number: 6,
+                title: 'Differential Equations',
+                tier: 'tier2',
+                tierLabel: 'Tier 2 • High-Scoring',
+                questions: '1 – 2 Qs',
+                marksRange: '4 – 8 Marks',
+                avgMarks: 6,
+                tip: 'Linear Differential Equations (dy/dx + Py = Q) is the single most repeated calculus archetype.',
+                subtopics: [
+                    'Order & Degree of Differential Equations',
+                    'Variable Separable & Reducible to Variable Separable Forms',
+                    'Homogeneous Differential Equations',
+                    'Linear Differential Equations (Integrating Factor Method)',
+                    'Exact Differential Forms (xdy + ydx, (xdy - ydx)/x²)'
+                ],
+                pyqs: [
+                    '2022–2023 PYQs Solved',
+                    '2024–2025 PYQs Solved',
+                    '2026 PYQs + Short Formula Sheet'
+                ]
+            },
+            {
+                id: 'binomial-theorem',
+                number: 7,
+                title: 'Binomial Theorem',
+                tier: 'tier2',
+                tierLabel: 'Tier 2 • High-Scoring',
+                questions: '1 – 2 Qs',
+                marksRange: '4 – 8 Marks',
+                avgMarks: 6,
+                tip: 'General term T_{r+1} and remainder problems using modular/binomial expansion are fast marks.',
+                subtopics: [
+                    'General Term (T_{r+1}), Middle Term & Term Independent of x',
+                    'Finding Coefficient of x^k in Multinomial/Product Expansions',
+                    'Divisibility & Remainder Problems using Binomial Expansion',
+                    'Properties of Binomial Coefficients (^nC_r) & Series Summation'
+                ],
+                pyqs: [
+                    '2022–2023 PYQs Solved',
+                    '2024–2025 PYQs Solved',
+                    '2026 PYQs + Short Formula Sheet'
+                ]
+            },
+            {
+                id: 'limits-continuity',
+                number: 8,
+                title: 'Limits, Continuity & Differentiability',
+                tier: 'tier2',
+                tierLabel: 'Tier 2 • High-Scoring',
+                questions: '1 – 2 Qs',
+                marksRange: '4 – 8 Marks',
+                avgMarks: 6,
+                tip: 'Use Taylor series expansions and L’Hôpital’s rule to evaluate indeterminate forms in seconds.',
+                subtopics: [
+                    'Standard Limits, 1^∞ Form & L’Hôpital’s Rule',
+                    'Series Expansions (sin x, cos x, e^x, ln(1+x)) for Limits',
+                    'Continuity of Piecewise, Modulus & Greatest Integer Functions',
+                    'Differentiability at Critical/Sharp Points & Functional Equations'
+                ],
+                pyqs: [
+                    '2022–2023 PYQs Solved',
+                    '2024–2025 PYQs Solved',
+                    '2026 PYQs + Short Formula Sheet'
+                ]
+            },
+            {
+                id: 'application-of-derivatives',
+                number: 9,
+                title: 'Application of Derivatives (AOD)',
+                tier: 'tier2',
+                tierLabel: 'Tier 2 • High-Scoring',
+                questions: '1 – 2 Qs',
+                marksRange: '4 – 8 Marks',
+                avgMarks: 6,
+                tip: 'Focus on Monotonicity (increasing/decreasing intervals) and Local/Global Maxima & Minima.',
+                subtopics: [
+                    'Rate of Change of Quantities',
+                    'Monotonicity: Increasing & Decreasing Functions & Inequalities',
+                    'Local Maxima, Local Minima & First/Second Derivative Tests',
+                    'Global Maxima/Minima on Closed Intervals & Word Problems'
+                ],
+                pyqs: [
+                    '2022–2023 PYQs Solved',
+                    '2024–2025 PYQs Solved',
+                    '2026 PYQs + Short Formula Sheet'
+                ]
+            },
+            {
+                id: 'straight-lines-circles',
+                number: 10,
+                title: 'Straight Lines & Circles',
+                tier: 'tier2',
+                tierLabel: 'Tier 2 • High-Scoring',
+                questions: '2 Qs',
+                marksRange: '8 Marks',
+                avgMarks: 8,
+                tip: 'Draw a quick rough diagram first—many circle geometry questions solve via Pythagoras theorem.',
+                subtopics: [
+                    'Centers of Triangle (Centroid, Orthocenter, Circumcenter, Incenter)',
+                    'Distance of a Point from a Line, Distance Between Parallel Lines & Image',
+                    'Family of Lines & Angle Bisectors',
+                    'Standard Equation of Circle, Intercepts & Position of a Point',
+                    'Tangent Conditions, Chord of Contact & Family of Circles'
+                ],
+                pyqs: [
+                    '2022–2023 PYQs Solved',
+                    '2024–2025 PYQs Solved',
+                    '2026 PYQs + Short Formula Sheet'
+                ]
+            },
+
+            // TIER 3: Quick-Kill Bonus Chapters (~10 Marks)
+            {
+                id: 'statistics',
+                number: 11,
+                title: 'Statistics',
+                tier: 'tier3',
+                tierLabel: 'Tier 3 • Quick-Kill',
+                questions: '1 Q',
+                marksRange: '4 Marks',
+                avgMarks: 4,
+                tip: 'Guaranteed 4 marks in under 2 minutes. Memorize variance shift/scale rules and missing observation tricks.',
+                subtopics: [
+                    'Mean, Median & Mode for Ungrouped and Grouped Data',
+                    'Variance (σ²) & Standard Deviation (σ) Shortcut Formulas',
+                    'Effect of Change of Origin & Scale on Mean and Variance',
+                    'Finding Missing Observations & Combined Mean/Variance'
+                ],
+                pyqs: [
+                    '2022–2023 PYQs Solved',
+                    '2024–2025 PYQs Solved',
+                    '2026 PYQs + Short Formula Sheet'
+                ]
+            },
+            {
+                id: 'sets-relations-functions',
+                number: 12,
+                title: 'Sets, Relations & Functions',
+                tier: 'tier3',
+                tierLabel: 'Tier 3 • Quick-Kill',
+                questions: '1 – 2 Qs',
+                marksRange: '4 – 8 Marks',
+                avgMarks: 6,
+                tip: 'Counting reflexive, symmetric, and equivalence relations is a classic NTA favorite.',
+                subtopics: [
+                    'Set Operations, Venn Diagrams & Cardinality Formulas',
+                    'Types of Relations (Reflexive, Symmetric, Transitive, Equivalence) & Counting',
+                    'Domain & Range of Real Functions (log, sqrt, inverse trig)',
+                    'One-One (Injective), Onto (Surjective), Composite & Inverse Functions'
+                ],
+                pyqs: [
+                    '2022–2023 PYQs Solved',
+                    '2024–2025 PYQs Solved',
+                    '2026 PYQs + Short Formula Sheet'
+                ]
+            }
+        ];
+
+        const STORAGE_KEY = 'jee_maths_60plus_checklist_v1';
+        let checkedState = {};
+        let expandedCards = {};
+        let currentFilter = 'all';
+        let allExpanded = false;
+
+        // Initialize State from LocalStorage
+        function loadState() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                if (saved) {
+                    checkedState = JSON.parse(saved);
+                }
+            } catch (e) {
+                console.error('Could not load saved progress:', e);
+                checkedState = {};
+            }
+            // Expand first 2 chapters by default for immediate usability
+            expandedCards['3d-geometry'] = true;
+            expandedCards['vector-algebra'] = true;
+        }
+
+        function saveState() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(checkedState));
+                showToast('Progress saved automatically');
+            } catch (e) {
+                console.error('Could not save progress:', e);
+            }
+        }
+
+        // Toggle individual checkbox
+        function toggleItem(itemId) {
+            checkedState[itemId] = !checkedState[itemId];
+            if (!checkedState[itemId]) {
+                delete checkedState[itemId];
+            }
+            saveState();
+            updateDashboard();
+            renderChapters();
+        }
+
+        // Toggle chapter card accordion
+        function toggleCard(chapterId) {
+            expandedCards[chapterId] = !expandedCards[chapterId];
+            renderChapters();
+        }
+
+        // Expand or Collapse all visible cards
+        function toggleAllCards() {
+            allExpanded = !allExpanded;
+            chaptersData.forEach(ch => {
+                expandedCards[ch.id] = allExpanded;
+            });
+            const btn = document.getElementById('expandAllBtn');
+            btn.textContent = allExpanded ? 'Collapse All' : 'Expand All';
+            renderChapters();
+        }
+
+        // Mark all items in a specific chapter as complete/incomplete
+        function toggleChapterComplete(event, chapterId) {
+            event.stopPropagation();
+            const chapter = chaptersData.find(c => c.id === chapterId);
+            if (!chapter) return;
+
+            const allKeys = getChapterItemKeys(chapter);
+            const isAllChecked = allKeys.every(k => checkedState[k]);
+
+            allKeys.forEach(k => {
+                if (isAllChecked) {
+                    delete checkedState[k];
+                } else {
+                    checkedState[k] = true;
+                }
+            });
+
+            saveState();
+            updateDashboard();
+            renderChapters();
+        }
+
+        function getChapterItemKeys(chapter) {
+            const keys = [];
+            chapter.subtopics.forEach((_, idx) => keys.push(`${chapter.id}_sub_${idx}`));
+            chapter.pyqs.forEach((_, idx) => keys.push(`${chapter.id}_pyq_${idx}`));
+            return keys;
+        }
+
+        // Filter Tabs
+        function setFilter(tier) {
+            currentFilter = tier;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                if (btn.dataset.filter === tier) {
+                    btn.className = 'filter-btn active px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-sky-500 text-slate-950 shadow-lg shadow-sky-500/20';
+                } else {
+                    btn.className = 'filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-slate-900 text-slate-300 border border-slate-800 hover:border-slate-700';
+                }
+            });
+            renderChapters();
+        }
+
+        // Calculate Metrics & Update Top Dashboard
+        function updateDashboard() {
+            let totalSubtopics = 0;
+            let completedSubtopics = 0;
+            let totalPyqs = 0;
+            let completedPyqs = 0;
+            let unlockedMarksRaw = 0;
+            let maxPossibleMarks = 0;
+            let masteredChapters = 0;
+
+            chaptersData.forEach(chapter => {
+                maxPossibleMarks += chapter.avgMarks;
+                let chTotal = chapter.subtopics.length + chapter.pyqs.length;
+                let chDone = 0;
+
+                chapter.subtopics.forEach((_, idx) => {
+                    totalSubtopics++;
+                    if (checkedState[`${chapter.id}_sub_${idx}`]) {
+                        completedSubtopics++;
+                        chDone++;
+                    }
+                });
+
+                chapter.pyqs.forEach((_, idx) => {
+                    totalPyqs++;
+                    if (checkedState[`${chapter.id}_pyq_${idx}`]) {
+                        completedPyqs++;
+                        chDone++;
+                    }
+                });
+
+                if (chDone === chTotal && chTotal > 0) {
+                    masteredChapters++;
+                }
+
+                // Proportional expected marks unlocked for this chapter
+                const chapterRatio = chTotal > 0 ? (chDone / chTotal) : 0;
+                unlockedMarksRaw += chapter.avgMarks * chapterRatio;
+            });
+
+            const totalTasks = totalSubtopics + totalPyqs;
+            const completedTasks = completedSubtopics + completedPyqs;
+            const overallPct = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+            const unlockedMarks = Math.round(unlockedMarksRaw);
+            const marksPct = maxPossibleMarks > 0 ? Math.min(100, Math.round((unlockedMarksRaw / maxPossibleMarks) * 100)) : 0;
+
+            // Update DOM
+            document.getElementById('marksUnlocked').textContent = unlockedMarks;
+            document.getElementById('marksProgressBar').style.width = `${marksPct}%`;
+
+            const targetBadge = document.getElementById('targetBadge');
+            const marksSubtext = document.getElementById('marksSubtext');
+            if (unlockedMarks >= 60) {
+                targetBadge.textContent = '60+ Target Unlocked!';
+                targetBadge.className = 'px-2.5 py-0.5 text-xs font-semibold rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40';
+                marksSubtext.textContent = 'Exam-ready zone! Keep revising formulas & timed mock accuracy.';
+                marksSubtext.className = 'text-xs text-emerald-400 mt-2 font-medium';
+            } else {
+                const needed = 60 - unlockedMarks;
+                targetBadge.textContent = 'Goal: 60+ Marks';
+                targetBadge.className = 'px-2.5 py-0.5 text-xs font-semibold rounded-full bg-amber-500/15 text-amber-400 border border-amber-500/30';
+                marksSubtext.textContent = `Unlock ${needed} more marks to cross the 60-mark safe threshold.`;
+                marksSubtext.className = 'text-xs text-slate-400 mt-2';
+            }
+
+            document.getElementById('overallPercentText').textContent = `${overallPct}%`;
+            document.getElementById('completedTasksCount').textContent = completedTasks;
+            document.getElementById('totalTasksCount').textContent = `/ ${totalTasks} Milestones`;
+            document.getElementById('overallProgressBar').style.width = `${overallPct}%`;
+
+            document.getElementById('subtopicsSummary').textContent = `Subtopics: ${completedSubtopics}/${totalSubtopics}`;
+            document.getElementById('pyqsSummary').textContent = `PYQs: ${completedPyqs}/${totalPyqs}`;
+            document.getElementById('masteredChaptersCount').textContent = masteredChapters;
+        }
+
+        // Render Chapter Cards
+        function renderChapters() {
+            const container = document.getElementById('chaptersContainer');
+            const query = document.getElementById('searchInput').value.trim().toLowerCase();
+
+            const filtered = chaptersData.filter(ch => {
+                const matchesTier = currentFilter === 'all' || ch.tier === currentFilter;
+                if (!matchesTier) return false;
+                if (!query) return true;
+                const inTitle = ch.title.toLowerCase().includes(query);
+                const inSub = ch.subtopics.some(s => s.toLowerCase().includes(query));
+                return inTitle || inSub;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-10 text-center">
+                        <p class="text-slate-400 text-sm">No chapters or subtopics match "<span class="text-slate-200 font-medium">${escapeHtml(query)}</span>".</p>
+                        <button onclick="document.getElementById('searchInput').value=''; setFilter('all');" class="mt-3 px-4 py-1.5 text-xs font-semibold rounded-lg bg-sky-500/15 text-sky-400 border border-sky-500/30 hover:bg-sky-500/25 transition">
+                            Clear Filters
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = filtered.map(chapter => {
+                const itemKeys = getChapterItemKeys(chapter);
+                const doneCount = itemKeys.filter(k => checkedState[k]).length;
+                const totalCount = itemKeys.length;
+                const pct = Math.round((doneCount / totalCount) * 100);
+                const isMastered = doneCount === totalCount;
+                const isExpanded = !!expandedCards[chapter.id];
+
+                // Tier badge colors
+                let tierStyle = 'bg-sky-500/10 text-sky-400 border-sky-500/30';
+                if (chapter.tier === 'tier2') tierStyle = 'bg-indigo-500/10 text-indigo-400 border-indigo-500/30';
+                if (chapter.tier === 'tier3') tierStyle = 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30';
+
+                return `
+                    <div class="bg-slate-900/90 border ${isMastered ? 'border-emerald-500/40' : 'border-slate-800'} rounded-2xl overflow-hidden transition-all duration-200 shadow-lg">
+                        <!-- Card Header (Clickable to Expand/Collapse) -->
+                        <div onclick="toggleCard('${chapter.id}')" class="p-4 sm:p-5 cursor-pointer hover:bg-slate-800/40 transition flex flex-col md:flex-row md:items-center justify-between gap-4 select-none">
+                            <div class="flex items-start sm:items-center gap-3.5">
+                                <div class="w-9 h-9 rounded-xl ${isMastered ? 'bg-emerald-500 text-slate-950' : 'bg-slate-800 text-slate-200 border border-slate-700'} font-bold text-sm flex items-center justify-center shrink-0 mt-0.5 sm:mt-0">
+                                    ${isMastered ? '✓' : chapter.number}
+                                </div>
+                                <div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <h3 class="text-base sm:text-lg font-bold text-white">${chapter.title}</h3>
+                                        <span class="px-2.5 py-0.5 text-[11px] font-semibold rounded-full border ${tierStyle}">
+                                            ${chapter.tierLabel}
+                                        </span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-x-4 gap-y-1 mt-1 text-xs text-slate-400">
+                                        <span>Weightage: <strong class="text-slate-200">${chapter.questions} (${chapter.marksRange})</strong></span>
+                                        <span>&bull;</span>
+                                        <span>Progress: <strong class="${isMastered ? 'text-emerald-400' : 'text-sky-400'}">${doneCount}/${totalCount} (${pct}%)</strong></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center justify-between md:justify-end gap-3 pl-12 md:pl-0">
+                                <!-- Mini Progress Bar -->
+                                <div class="w-28 sm:w-36 bg-slate-800 rounded-full h-2 overflow-hidden">
+                                    <div class="${isMastered ? 'bg-emerald-400' : 'bg-sky-500'} h-2 rounded-full transition-all duration-300" style="width: ${pct}%"></div>
+                                </div>
+
+                                <button onclick="toggleChapterComplete(event, '${chapter.id}')" class="px-2.5 py-1 text-[11px] font-semibold rounded-lg border transition ${isMastered ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30 hover:bg-emerald-500/25' : 'bg-slate-800 text-slate-300 border-slate-700 hover:bg-slate-700'}">
+                                    ${isMastered ? 'Mastered' : 'Mark All'}
+                                </button>
+
+                                <div class="w-7 h-7 rounded-lg bg-slate-800/80 flex items-center justify-center text-slate-400">
+                                    <svg class="w-4 h-4 transform transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Expandable Body -->
+                        ${isExpanded ? `
+                        <div class="border-t border-slate-800/80 bg-slate-950/40 p-4 sm:p-5 space-y-5">
+                            <!-- Pro Tip Banner -->
+                            <div class="bg-slate-900/90 border border-slate-800 rounded-xl px-3.5 py-2.5 flex items-start gap-2.5 text-xs text-slate-300">
+                                <span class="text-amber-400 font-bold shrink-0">⚡ Strategy:</span>
+                                <span>${chapter.tip}</span>
+                            </div>
+
+                            <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+                                <!-- High-Yield Subtopics Column -->
+                                <div class="lg:col-span-2 space-y-2.5">
+                                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+                                        <span class="w-2 h-2 rounded-full bg-sky-400"></span>
+                                        High-Yield Subtopics &amp; Question Archetypes
+                                    </h4>
+                                    <div class="space-y-2">
+                                        ${chapter.subtopics.map((sub, idx) => {
+                                            const key = `${chapter.id}_sub_${idx}`;
+                                            const isChecked = !!checkedState[key];
+                                            return `
+                                                <label class="flex items-start gap-3 p-2.5 rounded-xl border ${isChecked ? 'bg-sky-950/20 border-sky-500/30' : 'bg-slate-900/60 border-slate-800/80 hover:border-slate-700'} cursor-pointer transition">
+                                                    <input type="checkbox" class="custom-checkbox mt-0.5" ${isChecked ? 'checked' : ''} onchange="toggleItem('${key}')">
+                                                    <span class="text-xs sm:text-sm ${isChecked ? 'line-through text-slate-400' : 'text-slate-200'} leading-snug">${sub}</span>
+                                                </label>
+                                            `;
+                                        }).join('')}
+                                    </div>
+                                </div>
+
+                                <!-- PYQ & Revision Milestones Column -->
+                                <div class="space-y-2.5">
+                                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+                                        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                                        PYQ &amp; Revision Milestones
+                                    </h4>
+                                    <div class="space-y-2">
+                                        ${chapter.pyqs.map((pyq, idx) => {
+                                            const key = `${chapter.id}_pyq_${idx}`;
+                                            const isChecked = !!checkedState[key];
+                                            return `
+                                                <label class="flex items-start gap-3 p-3 rounded-xl border ${isChecked ? 'bg-emerald-950/25 border-emerald-500/40' : 'bg-slate-900/80 border-slate-800 hover:border-slate-700'} cursor-pointer transition">
+                                                    <input type="checkbox" class="custom-checkbox pyq-checkbox mt-0.5" ${isChecked ? 'checked' : ''} onchange="toggleItem('${key}')">
+                                                    <div>
+                                                        <span class="text-xs sm:text-sm font-medium block ${isChecked ? 'line-through text-emerald-300/70' : 'text-slate-200'}">${pyq}</span>
+                                                        <span class="text-[11px] text-slate-500">${idx === 0 ? 'Core pattern familiarity' : idx === 1 ? 'Recent NTA difficulty level' : 'Final exam readiness'}</span>
+                                                    </div>
+                                                </label>
+                                            `;
+                                        }).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        ` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Modal & Toast Utilities
+        function openResetModal() {
+            const modal = document.getElementById('resetModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeResetModal() {
+            const modal = document.getElementById('resetModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function confirmResetProgress() {
+            checkedState = {};
+            saveState();
+            updateDashboard();
+            renderChapters();
+            closeResetModal();
+            showToast('All progress has been reset');
+        }
+
+        let toastTimeout;
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').textContent = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 2200);
+        }
+
+        function escapeHtml(str) {
+            return str.replace(/[&<>"']/g, m => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            }[m]));
+        }
+
+        // Initialize on Page Load
+        window.addEventListener('DOMContentLoaded', () => {
+            loadState();
+            updateDashboard();
+            renderChapters();
+        });
+    </script>
+</body>
+</html>
+
 
